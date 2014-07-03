@@ -1,0 +1,30 @@
+<dl class="dl-horizontal panel panel-primary">
+  <div class="panel-heading">
+    <h4><u><%= @project.name + ': ' if @project %></u>Tasks</h4>
+    <div><%= @user.name || @user.nickname %></div>
+    <hr>
+    <%= button_tag 'Show resolved issues', class: 'btn btn-danger hide-resolved add-new-item' %>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-8">
+      <% if @tasks.any? %>
+        <table class='table table-hover'>
+          <th>#</th>
+          <th>Short description</th>
+          <th>Project</th>
+          <th>Status</th>
+          <% @tasks.order('updated_at DESC').each do |t| %>
+            <tr class="<%= 'success' if t.done  %>">
+              <td><%= link_to t.name, task_path(t) %></td>
+              <td><%= t.description %></td>
+              <td><%= link_to t.project.name, project_path(t.project) %></td>
+              <td><%= t.status.humanize %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <blockquote>No tasks for the moment</blockquote>
+      <% end %>
+    </div>
+  </div>
+</dl>

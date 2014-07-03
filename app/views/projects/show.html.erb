@@ -1,0 +1,56 @@
+<div class="panel panel-black">
+  <div class="panel-heading">
+    <div class="media">
+      <% url = @project.logo.exists? ? @project.logo.url(:thumb) : 'original/no-logo.png' %>
+      <%= image_tag url, size: "100x100", alt: "NO logo", class: "img-responsive pull-left media-object" %>
+      <div class="media-body">
+        <h4 class="media-heading"><%= @project.name %></h4>
+        <%= link_to_if(@project.site, @project.site, @project.site){} %>
+        <br \>
+        <%= link_to 'Edit', edit_project_path(@project), class: 'btn btn-info' %>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      <dl class="dl-horizontal panel panel-default">
+        <div class="panel-heading">Summary details</div>
+        <div class="panel-body">
+            <blockquote><%= @project.description  %></blockquote>
+        </div>
+      </dl>
+      <div class="panel panel-black">
+        <div class="panel-heading"> Statistics </div>
+        <div class="panel-body">
+          <div class='well'>
+            <h4>Issues: 30 Days</h4>
+            <%= render partial: 'shared/statistics_graph', locals: { title: @project.name, opened: @still_open, resolved: @finished, dismissed: @dismissed, id: "#{@project.name}-last-30-days" } %>
+          </div>
+          <hr>
+          <div class='well'>
+            <h4>Profit: All time</h4>
+            <%= render partial: 'shared/income_graph', locals: { title: 'Project income', month_hash: @month_hash, incomes: @incomes, expenses: @expenses, profit: @profit, id: "#{@project.name}-income" } %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <dl class="dl-horizontal panel panel-warning">
+        <div class="panel-heading">Activity Stream <small>(last 10)</small></div>
+          <div class="panel-body">
+          <ul class="list-group">
+            <% if (defined? @action_logs) && @action_logs.any? %>
+              <% @action_logs.last(10).each do |log| %>
+                <li class="list-group-item"><%= render partial: 'shared/action_log_box', locals: {action_log: log} %></li>
+              <% end %>
+              <%= link_to_if(@action_logs.size > 10, '<< Load more >>', "#", class: 'btn btn-warning btn-sm user-assign', style: 'width:100%;background-color:#e6a600 !important'){}%>
+              <% else %>
+              <p>Nothing happened</p>
+            <% end %>
+          </ul>
+          </div>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>

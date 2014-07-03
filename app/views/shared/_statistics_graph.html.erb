@@ -1,0 +1,18 @@
+<div class="container"><canvas id='<%= "#{id}" %>' width='400' height='300'></canvas></div>
+<script>
+$(document).ready(function() {
+  var g = new Bluff.Pie('<%= j id %>', '400x300');
+  g.title = '<%= j title %>';
+  no_data_message = 'No issues';
+
+  g.theme_pastel();
+  g.set_background({colors: '#323a47'});
+  g.font_color = '#fffefa';
+
+  g.data("Resolved", <%= resolved %>, '#27ae60');
+  g.data("Opened Issues", <%= opened %>, '#febf0f');
+  g.data("Dismissed", <%= dismissed %>, '#e74c3c');
+  g.draw();
+})
+</script>
+

@@ -1,0 +1,38 @@
+<dl class="dl-horizontal panel panel-primary">
+  <div class="panel-heading"><%= render 'shared/profile_sticked' %></div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      <div class="panel panel-black">
+        <div class="panel-heading">Upload your avatar</div>
+        <div class="panel-body">
+          <%= simple_form_for @user, :html => { :multipart => true } do |f| %>
+            <% url = @user.avatar.exists? ? @user.avatar.url(:medium) : 'original/missing.png' %>
+            <%= image_tag url, size: "300x300", alt: "NO avatar", class: "img-thumbnail" %>
+            <div class="input-group">
+              <span class="btn btn-default btn-file">
+                <%= f.file_field :avatar %>
+              </span>
+            </div>
+            <p class="help-block">*Maximum resoution 300x300</p>
+            <%= link_to_if(@user.avatar.exists?, 'Delete avatar', delete_avatar_path(@user), class: 'btn btn-danger', method: :delete){}%>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 pull-right well">
+        <%= f.error_notification %>
+          <%= f.input :name, required: true %>
+          <%= f.input :email, placeholder: @user.email, as: :email, required: true %>
+          <%= f.input :nickname, placeholder: @user.nickname %>
+          <%= f.input :password, placeholder: 'change password..', as: :password %>
+          <p class="help-block">*If changed - need to reassign</p>
+          <%= f.input :role, disabled: (current_user.admin? ? false : true), as: :select, collection: User::USER_ROLES, required: true %>
+          <%= f.input :salary_per_hour, disabled: (current_user.admin? || current_user.manager? ? false : true), as: :decimal, :hint => "salary in $" %>
+          <%= f.input :level, disabled: (current_user.admin? || current_user.manager? ? false : true), as: :select, collection: User::USER_WORK_LEVELS, required: true %>
+          <%= f.input :position, disabled: (current_user.admin? || current_user.manager? ? false : true), as: :select, collection: User::USER_SPECIALIZATIONS, required: true %>
+          <br \>
+        <%= f.button :submit, "Submit changes", class: 'btn btn-primary' %>
+        <%= link_to 'Cancel', users_path, class: 'btn btn-danger'%>
+      <% end %>
+    </div>
+  </div>
+</dl>

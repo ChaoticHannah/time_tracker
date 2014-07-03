@@ -1,0 +1,49 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3><%= link_to @user.naming, user_path(@user), class: 'text-info', style: "color:#fffefa !important;" %></h3>
+  </div>
+  <div class="panel-body">
+    <dl class="dl-horizontal well">
+      <%= render partial: 'user_info', locals: { user: @user } %>
+    </dl>
+    <div class="panel panel-primary">
+      <div class="panel-heading">Tasks</div>
+      <div class='panel-body'>
+        <div class="col-md-6 ">
+          <div class='container'>
+            <h3 text-class="danger">TASKS</h3>
+            <hr>
+            <dl class="dl-horizontal col-md-6">
+              <h4 text-class="danger">All time</h4>
+              <hr>
+              <dt>Started: </dt>
+              <dd><%= link_to @user.tasks.count, list_tasks_user_path(@user) %></dd>
+              <dt>Finished: </dt>
+              <dd><%= link_to @user.tasks.finished.count, list_tasks_user_path(@user, finished: true) %></dd>
+              <dt>Cancelled: </dt>
+              <dd><%= link_to @user.tasks.dismissed.count %></dd>
+            </dl>
+            <dl class="dl-horizontal col-md-6">
+              <h4 text-class="danger"><%= current_month %><small>(current month)</small></h4>
+              <hr>
+              <dt>Started: </dt>
+              <dd><%= link_to @user.started_this_month_tasks.count, list_tasks_user_path(@user, finished: true, month: DateTime.now.month)%></dd>
+              <dt>Finished: </dt>
+              <dd><%= link_to @user.started_this_month_tasks.finished.count, list_tasks_user_path(@user, dismissed: true, month: DateTime.now.month) %></dd>
+              <dt>Cancelled: </dt>
+              <dd><%= link_to @user.started_this_month_tasks.dismissed.count %></dd>
+            </dl>
+          </div>
+        </div>
+        <div class='col-md-6'>
+          <div>
+            <%= render partial: 'shared/statistics_graph', locals: { title: 'All time', opened: @tasks.still_open.count, resolved: @tasks.finished.count, dismissed: @dismissed, id: "@user.naming-show-all-tasks" } %>
+          </div>
+          <div>
+            <%= render partial: 'shared/statistics_graph', locals: { title: 'Last month', opened: @tasks.started_this_month.still_open.count, resolved: @tasks.started_this_month.finished.count, dismissed: @dismissed, id: "#{@user.naming}-show-tasks-last-month" } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

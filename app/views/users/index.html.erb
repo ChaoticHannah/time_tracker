@@ -1,0 +1,10 @@
+<dl class="dl-horizontal panel panel-primary">
+  <div class="panel-heading">Users</div>
+  <div class="panel-body">
+    <%= button_to "List blocked users", blocked_users_path, class: "btn btn-lrg btn-danger", id: 'blocked-users-button' %>
+      <br \>
+    <% if @users.active.any? && (current_user.admin? || current_user.manager?) %>
+      <%= render 'users_table' %>
+    <% end %>
+  </div>
+</dl>

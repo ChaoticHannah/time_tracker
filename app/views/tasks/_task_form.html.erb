@@ -1,0 +1,24 @@
+<div class="panel-body">
+  <div class="col-md-3">
+    <%= simple_form_for @task do |f| %>
+      <%= f.error_notification %>
+      <%= f.input :name, required: true %>
+      <%= f.association :project, as: :select, required: true %>
+      <%= f.input :description, as: :text, required: true, maxlength: 250 %>
+      <%= f.input :full_description, as: :text, required: true, maxlength: 800 %>
+      <%= f.input :deadline, required: true, selected: f.object.try(:deadline) %>
+      <%= f.input :priority, as: :select, collection: %w(urgent high low avarage), required: true, selected: f.object.try(:priority) %>
+      <p class='help-block'><small>Time in hours for the issue to be resolved</small></p>
+      <%= f.input :specialization, as: :select, collection: Task::TASK_SPECIALIZATIONS.map {|s| [s.humanize, s]}, required: true %>
+      <br \>
+      Assign user&nbsp;<input type="checkbox" id="user-assign-flag">
+      <div id="user-assign">
+        <%= f.association :user, as: :select, label_method: :naming, value_method: :id  %>
+      </div>
+      <br \>
+      <br \>
+      <%= f.button :submit, class: 'btn-primary' %>
+      <button class="btn cancel-new-form btn-danger">Cancel</button>
+    <% end %>
+  </div>
+</div>

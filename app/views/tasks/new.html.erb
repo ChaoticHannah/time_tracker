@@ -1,0 +1,10 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+    <ol class="breadcrumb">
+      <li><%= link_to 'Dashboard', root_path %></li>
+      <li><%= link_to 'Tasks', tasks_path %></li>
+      <li class="active">New task</li>
+    </ol>
+  </div>
+  <%= render 'task_form'%>
+</div>

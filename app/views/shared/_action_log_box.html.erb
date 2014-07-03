@@ -1,0 +1,21 @@
+<div class="media">
+  <a class="pull-left" href="<%= user_path(action_log.user) %>">
+    <% url = action_log.user.avatar.exists? ? action_log.user.avatar.url : 'original/missing.png' %>
+    <%= image_tag url, size: "40x40", alt: "No avatar", class: "img-responsive pull-left media-object" %>
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">
+      <%= link_to action_log.user.naming, user_path(action_log.user) %>
+      <% if action_log.task_id.nil? %>
+        <%= ' ' + action_log.action.humanize.downcase + ' ' %>
+        <%= link_to action_log.project.name, project_path(action_log.project) %>
+        <%= ' ' + action_log.try(:data) %>
+      <% else %>
+        <%= ' ' + action_log.action.humanize.downcase + ' ' %>
+        <%= link_to action_log.task.name, task_path(action_log.task) %>
+        <%= ' ' + action_log.try(:data) %>
+      <% end %>
+    </h4>
+    <%= action_log.created_at.strftime('%d/%m/%Y at %I:%M%p') %>, <%= link_to action_log.project.name, project_path(action_log.project)%>
+  </div>
+</div>

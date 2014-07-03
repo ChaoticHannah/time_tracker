@@ -1,0 +1,4 @@
+ <div class="col-md-6 col-md-offset-3">
+  <% @url = user.avatar.exists? ? user.avatar.url(:thumb) : 'original/missing.png' %>
+  <%= image_tag @url, size: '100x100', class: "img-responsive img-thumbnail", alt: "Avatar" %>
+</div>

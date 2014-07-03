@@ -1,0 +1,54 @@
+<dl class="dl-horizontal panel panel-primary">
+  <div class="panel-heading"><%= render 'shared/profile_sticked' %></div>
+  <div class="panel-body show-user-panel">
+    <div class="col-md-6">
+      <dl class="dl-horizontal panel panel-black">
+        <div class="panel-heading">Summary details</div>
+        <div class="panel-body">
+          <%= render partial: 'user_photo', locals: { user: @user } %>
+          <%= render partial: 'user_info', locals: { user: @user } %>
+        </div>
+      </dl>
+      <dl class="dl-horizontal panel panel-black">
+        <div class="panel-heading">Assigned Open/Resolved Issues per Project</div>
+        <div class="panel-body">
+          <% @user.projects.uniq.each do |p| %>
+            <dt><%= link_to p.name, project_path(p) %></dt>
+            <dd><%= link_to p.tasks.where('user_id =?', @user.id).count, list_tasks_user_path(@user, project_id: p.id) %></dd>
+          <% end %>
+        </div>
+      </dl>
+    </div>
+    <div class="col-md-6">
+      <dl class="dl-horizontal panel panel-warning">
+        <div class="panel-heading">Activity Stream <small>(last 5)</small></div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <% if @action_logs.any? %>
+              <% @action_logs.last(5).each do |log| %>
+                <li class="list-group-item"><%= render partial: 'shared/action_log_box', locals: {action_log: log} %></li>
+              <% end %>
+              <%= link_to_if(@action_logs.size > 5, '<< Load more >>', "#", class: 'btn btn-warning btn-sm user-assign', style: 'width:100%;background-color:#e6a600 !important'){}%>
+              <% else %>
+              <p>Nothing happened</p>
+            <% end %>
+          </ul>
+        </div>
+      </dl>
+       <dl class="dl-horizontal panel panel-warning">
+        <div class="panel-heading">Salary per <%= current_month %></div>
+        <div class="panel-body">
+          <ul class="list-group">
+            <% if @user.started_this_month_tasks.any? && @user.general_month_time %>
+              <p>Total time: <%= @user.general_month_time.strftime('%H:%M') %></p>
+               <p>Salary: <%= @user.calculate_salary %>$</p>
+            <% else %>
+              <p>Work more!</p>
+            <% end %>
+          </ul>
+        </div>
+      </dl>
+    </div>
+  </div>
+</dl>
+

@@ -1,0 +1,61 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">Task assign adviser</div>
+  <div class="panel-body">
+    <% if @tasks.count <= 3 %>
+      <div class="jumbotron">
+        <p>Not enaugh tasks to assign. Start from creating one:
+        <br>
+        <%= link_to '+ new task', new_task_path, class: 'btn btn-lg add-new-item' %></p>
+      </div>
+    <% else %>
+      <%= form_tag('/task_assign_adviser', method: :get) do %>
+        <table class='table'>
+          <thead>
+            <th>Add user</th>
+            <% @tasks.each do |t| %>
+              <th>
+                <%= link_to t.name, task_path(t) %>
+                <br>
+                <small>(<%= t.specialization.humanize.titleize %>)</small>
+              </th>
+            <% end %>
+          </thead>
+          <tbody>
+            <% @tasks.size.times do |i| %>
+              <tr>
+                <td>
+                  <% unless params[:commit] == 'advise' %>
+                    <%= select "assigned_users[#{i}]", @users.flatten[i], options_for_select(User.all.collect {|u| [u.naming, u.naming]}), include_blank: true %>
+                  <% else %>
+                    <p><%= @users.flatten[i]%></p>
+                  <% end %>
+                </td>
+                <% @tasks.size.times do |j| %>
+                  <td class="<%= "success" if @solution.include?([i, j]) %>">
+                    <% if params[:commit] == 'advise' %>
+                      <% if @solution.include? [i, j] %>
+                      <div class='btn-group'>
+                        <%= number_field_tag "skill-#{i}-#{j}", @skills[i, j], in: 1..40, class: 'btn btn-sm btn-default', disabled: true %>
+                        <%= link_to '+ assign', '#', class: 'btn btn-sm user-assign' %>
+                      </div>
+                      <% else %>
+                        <%= number_field_tag "skill-#{i}-#{j}", @skills[i, j], in: 1..40, disabled: true, class: 'btn btn-sm btn-default' %>
+                      <% end %>
+                    <% else %>
+                      <%= number_field_tag "skill-#{i}-#{j}", @skills[i, j], in: 1..40, required: :true, class: 'btn btn-sm btn-default' %>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class='btn-group'>
+          <%= submit_tag 'advise', { advise: true, class: 'btn add-new-item btn-lg', disabled: ( params[:commit] == 'advise' ? true : false ) } %>
+          <%= link_to :randomize, task_adviser_path(randomize: true), class: 'btn btn-lg btn-warning', disabled: ( params[:commit] == 'advise' ? true : false ) %>
+          <%= link_to :reset, task_adviser_path, class: 'btn btn-lg btn-info'%>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

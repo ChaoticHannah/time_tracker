@@ -1,0 +1,27 @@
+  <div class="panel-body">
+    <div class="col-md-7">
+      <div class="panel panel-black">
+        <div class="panel-heading">Logo</div>
+        <div class="panel-body">
+          <%= simple_form_for @project do |f| %>
+          <% url = @project.logo.exists? ? @project.logo.url(:medium) : 'original/no-logo.png' %>
+              <%= image_tag url, size: "300x300", alt: "NO logo", class: "img-thumbnail" %>
+              <div class="input-group">
+                <span class="btn btn-default btn-file">
+                  <%= f.file_field :logo %>
+                </span>
+              </div>
+              <p class="help-block">*Maximum resoution 300x300</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <%= f.error_notification %>
+      <%= f.input :name, required: true %>
+      <%= f.input :description, as: :text %>
+      <%= f.input :site, as: :url, placeholder: 'http://' %>
+      <br \>
+      <%= f.button :submit %>
+      <%= link_to 'Cancel', :back, class: 'btn btn-danger' %>
+    <% end %>
+    </div>

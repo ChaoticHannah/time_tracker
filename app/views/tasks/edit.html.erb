@@ -1,0 +1,10 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <ol class="breadcrumb">
+      <li><%= link_to 'Dashboard', root_path %></li>
+      <li><%= link_to @task.project.name, project_path(@task.project) %></li>
+      <li class="active">Edit <%= @task.name %></li>
+    </ol>
+  </div>
+  <%= render 'task_form'%>
+</div>

@@ -1,0 +1,37 @@
+<dl class="dl-horizontal panel panel-primary">
+  <div class="panel-heading">Tasks</div>
+  <div class="panel-body">
+    <%= link_to '+ new task', new_task_path, class: 'btn add-new-item' %>
+    <%= button_tag 'Show resolved issues', class: 'btn btn-danger hide-resolved add-new-item' %>
+    <h2><%= @project.name + " task list" if defined? @project%></h2>
+    <br \>
+    <% if @tasks.any? %>
+      <table class="table table-hover table-striped" id="tasks-table">
+        <th>Identical name</th>
+        <th>Project</th>
+        <th>Description</th>
+        <th>Assigned user</th>
+        <th>Status</th>
+        <th>Actions</th>
+        <% @tasks.each do |task| %>
+            <tr class='<%= if task.done then 'success' end %>'>
+              <td><%= link_to task.name, task_path(task) %></td>
+              <td><%= task.project.name %></td>
+              <td><%= task.description ? task.description : '-' %></td>
+              <td>
+                <% if task.user %>
+                  <%= link_to task.user.name || task.user.nickname, user_path(task.user.id) %>
+                <% else %>
+                  <%= link_to "Assing user", "#"%>
+                <% end %>
+              </td>
+              <td><%= task.status %></td>
+              <td><%= link_to_unless(task.done, "edit", edit_task_path(task)){} %>
+              <br \>
+              <%= link_to_if((task.just_created || task.in_progress) ,'stop progress', task, :confirm => 'Are you sure?', :method => :delete){} %></td>
+            </tr>
+        <% end %>
+      </table>
+    <% end %>
+  </div>
+</dl>

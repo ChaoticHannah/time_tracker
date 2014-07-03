@@ -1,0 +1,6 @@
+<div class='container'>
+  <div class="alert alert-danger">
+    You were blocked. Contanct administrator <%= mail_to User.where('role = ?', 'admin').first.email %>
+    <%= link_to "Sign out", destroy_user_session_path, :method => :delete, class: 'pull-right' %>
+  </div>
+</div>

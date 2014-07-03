@@ -1,0 +1,10 @@
+@import 'variables';
+
+.breadcrumb {
+  margin-bottom: 5px !important;
+  background-color: $bloody !important;
+  a {
+    font-size: 16px !important;
+    color: white !important;
+  }
+}

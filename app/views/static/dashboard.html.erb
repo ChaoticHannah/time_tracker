@@ -1,0 +1,48 @@
+<div class="col-md-7">
+  <dl class="dl-horizontal panel panel-primary">
+    <div class="panel-heading">Introduction</div>
+    <div class="panel-body introduction">
+      <h4>Welcome to TimeTracker!</h4>
+      <p>Any questions? Check out <%= link_to "TimeTracker's Guide", "#" %></p>
+    </div>
+  </dl>
+  <dl class="dl-horizontal panel panel-primary">
+    <div class="panel-heading">Activity Stream <small>(last 5)</small></div>
+      <div class="panel-body">
+      <ul class="list-group">
+      <% if ActionLog.any? %>
+        <% @action_logs.last(5).each do |log| %>
+          <li class="list-group-item"><%= render partial: 'shared/action_log_box', locals: {action_log: log} %></li>
+        <% end %>
+        <%= link_to_if(@action_logs.size > 5, '<< Load more >>', "#", class: 'btn btn-sm user-assign', style: 'width:100%;'){}%>
+        <% else %>
+        <p>Nothing happened</p>
+        <% end %>
+      </ul>
+      </div>
+    </div>
+  </dl>
+<div class="col-md-5">
+  <dl class="dl-vertical panel panel-primary">
+    <div class="panel-heading">Tasks assigned to me</div>
+    <div class="panel-body">
+      <% if @user.tasks.any? %>
+      <%= button_tag 'Show resolved issues', class: 'btn btn-danger hide-resolved add-new-item' %>
+      <table class='table table-hover user-tasks-main-page'>
+      <th>#</th>
+      <th>Short description</th>
+      <th>Status</th>
+        <% @user.tasks.order('updated_at DESC').each do |t| %>
+          <tr class='<%= if t.done then 'success' end %>'>
+            <td><%= link_to t.name, task_path(t) %></td>
+            <td><%= t.description %></td>
+            <td class='<%= if t.done then 'text-success' end %>'><%= t.status.humanize %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <blockquote>No tasks for the moment</blockquote>
+      <% end %>
+      </table>
+    </div>
+  </dl>
+</div>

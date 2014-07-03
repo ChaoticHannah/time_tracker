@@ -1,0 +1,8 @@
+<dl class="dl-horizontal panel panel-primary">
+  <div class="panel-heading">Users</div>
+  <div class="panel-body">
+    <%= link_to 'List active users', users_path, class: 'btn btn-lrg btn-default btn-inverse' %>&nbsp;<small>(so you can block them)</small></p>
+    <%= render 'users_table' if @users.any? %>
+  </div>
+</dl>
+

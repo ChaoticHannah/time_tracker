@@ -1,0 +1,43 @@
+<dl class="dl-horizontal panel panel-primary">
+  <div class="panel-heading">Projects</div>
+  <div class="panel-body">
+    <%= link_to '+ new project', new_project_path, class: 'btn add-new-item' %>
+    <% if @projects.any? %>
+      <table class="table table-hover" id="projects-table">
+        <th>Logo</th>
+        <th>Name</th>
+        <th>Site</th>
+        <th>Description</th>
+        <th>Users involved</th>
+        <th>Actions</th>
+        <% @projects.each do |project| %>
+            <tr class="project-raw">
+              <td>
+               <% url = project.logo.exists? ? project.logo.url(:small) : 'original/no-logo.png' %>
+                <%= image_tag url, size: "40x40", alt: "NO logo", class: "img-thumbnail" %>
+              </td>
+              <td><%= link_to project.name, project_path(project) %></td>
+              <td>
+                <%= link_to_if(project.site, project.site, project.site, target: '_blank'){'-'}   %>
+              </td>
+              <td><%= project.description ? project.description : '-' %></td>
+              <td>
+                <% if project.users.any? %>
+                  <%= project.users.count %>
+                  <br \>
+                  <small>(<%= link_to 'list users', '#' %>)</small>
+                <% else %>
+                  -
+                <% end %>
+              </td>
+              <td><%= link_to "edit", edit_project_path(project.id) %>
+                <% if project.tasks.any? %>
+                  <%= link_to "list tasks", tasks_path(project_id: project.id) %>
+                <% end %>
+              </td>
+            </tr>
+        <% end %>
+      </table>
+    <% end %>
+  </div>
+</dl>

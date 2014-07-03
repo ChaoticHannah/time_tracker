@@ -1,0 +1,25 @@
+  <table class="table table-hover" id="users-table">
+    <th>Email</th>
+    <th>Name/Nickname</th>
+    <th>Last logged in</th>
+    <th>Actions</th>
+    <% @users.each do |user| %>
+        <tr class="<%= current_user == user ? 'success user-raw' : 'user-raw' %>">
+          <td><%= link_to user.email, user_path(user), target: '_blank' %></td>
+          <td><%= user.name ? user.name : user.nickname %></td>
+          <td><%= user.last_sign_in_at.strftime('%d/%m/%Y at %I:%M%p') %></td>
+          <td>
+            <div style="display: inline-flex;">
+              <% if current_user == user %>
+                <%= link_to 'edit', edit_user_path(user.id), class: 'btn btn-success btn-sm' %>
+              <% elsif current_user.admin? %>
+                <%= link_to_if(user.active?, 'block', block_user_path(user.id), remote: true, class: 'delete-from-table btn btn-danger btn-sm'){link_to 'unblock',unblock_user_path(user.id), remote: true, class: 'delete-from-table btn btn-success btn-sm'} %>
+              <% end %>
+              <% if user.tasks.any? %>
+                <%= link_to "list tasks", list_tasks_user_path(user), class: 'btn btn-default btn-sm' %>
+              <% end %>
+            </div>
+          </td>
+        </tr>
+    <% end %>
+  </table>

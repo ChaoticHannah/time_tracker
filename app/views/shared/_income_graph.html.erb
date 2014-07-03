@@ -1,0 +1,29 @@
+<div class="container"><canvas id='<%= "#{id}" %>' width='400' height='300'></canvas></div>
+<script>
+$(document).ready(function() {
+  var g = new Bluff.Bar('<%= j id %>', '400x300');
+  g.title = '<%= j title %>';
+  g.minimum_value = 0;
+  g.maximum_value = 50000;
+  no_data_message = 'No data';
+  g.theme_pastel();
+  g.set_background({colors: '#323a47'});
+  g.font_color = '#fffefa';
+  g.marker_color = '#fffefa';
+
+
+
+  g.data("Income", <%= incomes %>, '#3498db');
+  g.data("Expense", <%= expenses %>,'#e74c3c');
+  g.data("Profit", <%= profit %>,'#27ae60');
+  g.labels = { 12: "<%= month_hash[0] if month_hash[0] %>",
+               10: "<%= month_hash[2] if month_hash[2] %>",
+               8: "<%= month_hash[4] if month_hash[4] %>",
+               6: "<%= month_hash[6] if month_hash[6] %>",
+               4: "<%= month_hash[8] if month_hash[8] %>",
+               2: "<%= month_hash[10] if month_hash[10] %>",
+               0: "<%= month_hash[12] if month_hash[12] %>"};
+  g.draw();
+})
+</script>
+

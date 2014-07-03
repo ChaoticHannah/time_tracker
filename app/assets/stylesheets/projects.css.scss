@@ -1,0 +1,38 @@
+@import 'variables';
+
+.add-new-item {
+  background-color: $tomato;
+  color: $background;
+  -webkit-border-radius: 25px;
+     -moz-border-radius: 25px;
+          border-radius: 25px;
+  margin-bottom: 10px;
+  &:hover {
+    color: white !important;
+  }
+}
+
+.btn-info {
+  color: white !important;
+  -webkit-border-radius: 25px;
+     -moz-border-radius: 25px;
+          border-radius: 25px;
+  &:hover {
+    color: $background !important;
+  }
+}
+
+.user-assign {
+  @extend .add-new-item;
+  -webkit-border-radius: 0px !important;
+   -moz-border-radius: 0px !important;
+        border-radius: 0px !important;
+}
+
+.user-assigned {
+  @extend .add-new-item;
+  background-color: #25b695 !important;
+  -webkit-border-radius: 0px !important;
+   -moz-border-radius: 0px !important;
+        border-radius: 0px !important;
+}

@@ -1,0 +1,23 @@
+development:
+  adapter: postgresql
+  database: timetracker_dev
+  pool: 5
+  timeout: 5000
+  username: master
+  password: vik435to
+
+test:
+  adapter: postgresql
+  database: timetracker_test
+  pool: 5
+  timeout: 5000
+  username: master
+  password: vik435to
+
+production:
+  adapter: postgresql
+  database: timetracker_prod
+  pool: 5
+  timeout: 5000
+  username: master
+  password: vik435to

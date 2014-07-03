@@ -1,0 +1,134 @@
+/*
+ *= require_self
+ *= require bootstrap.min
+ *= require_tree .
+ */
+@import 'variables';
+
+body {
+  /*font-family: $railway !important;*/
+  background: #2b2b2b !important;
+}
+nav, .alert, .panel, .panel-heading, .well {
+  -webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
+}
+
+.alert-success {
+  color: #ecf0f1 !important;
+  background-color: #2ecc71 !important;
+  border: 3px solid #27ae60 !important;
+}
+
+.alert-danger {
+  color: #ecf0f1 !important;
+  background-color: $tomato !important;
+  border: 3px solid $bloody !important;
+}
+.panel .introduction {
+  font {
+    size: 14px;
+  }
+  a {
+    color: $tomato;
+  }
+}
+a:hover {
+  text-decoration: none !important;
+  color: $bloody !important;
+}
+
+a:active {
+  color: #c0392b !important;
+}
+
+a {
+  -webkit-transition:color .3s ease-out, opacity .3s ease-in;
+     -moz-transition:color .3s ease-out, opacity .3s ease-in;
+      -ms-transition:color .3s ease-out, opacity .3s ease-in;
+       -o-transition:color .3s ease-out, opacity .3s ease-in;
+          transition:color .3s ease-out, opacity .3s ease-in;
+}
+
+.error_notification {
+  color: red;
+}
+
+nav, .panel {
+  border: none !important;
+}
+
+.panel {
+  -webkit-box-shadow : 0 3px 3px rgba(1,1,1,0.2) !important;
+          box-shadow: 0 3px 3px rgba(1,1,1,0.2) !important;
+}
+
+.panel-heading {
+    -webkit-box-shadow : 0 2px 3px rgba(1,1,1,0.3) !important;
+          box-shadow: 0 2px 2px rgba(1,1,1,0.3) !important;
+}
+
+.panel-warning {
+  border-color: $sunflower !important;
+}
+.panel-warning > .panel-heading {
+  color: white !important;
+  background-color: $sunflower !important;
+  border-color: $sunflower !important;
+}
+
+.panel-primary {
+  border-color: $bloody !important;
+}
+.panel-primary > .panel-heading {
+  color: white !important;
+  background-color: $bloody !important;
+  border-color: $bloody !important;
+}
+
+.panel-default {
+  border-color: black !important;
+}
+.panel-default > .panel-heading {
+  color: white !important;
+  background-color: black !important;
+  border-color: black !important;
+}
+
+.panel-black {
+  border-color: $background !important;
+}
+.panel-black > .panel-heading {
+  color: white !important;
+  background-color: $background !important;
+  border-color: $background !important;
+}
+
+.panel-body .show-user-panel {
+  background: dimgray !important;
+}
+
+.user-edit-profile-link {
+  color: $background !important;
+  &:hover {
+    color: dimgray !important;
+  }
+}
+
+#header-logo {
+  margin-left: 5px;
+  padding-top: 5px;
+  display: inline-flex;
+  .navbar-brand {
+    margin-left: 2px !important;
+  }
+}
+
+.badge {
+  background-color: $bloody !important;
+}
+
+.user-skill-input {
+  width: 60px;
+}

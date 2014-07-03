@@ -1,0 +1,8 @@
+<h3>
+Profile: <%= @user.name || @user.nickname %>
+</h3>
+<p>
+  <%= link_to_if(can_edit(@user), 'Edit', edit_user_path(@user), class: 'btn add-new-item'){} %>
+  <%= link_to 'show statistics', show_statistics_user_path(@user), class: 'btn add-new-item' %>
+</p>
+

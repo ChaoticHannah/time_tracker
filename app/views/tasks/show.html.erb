@@ -1,0 +1,79 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <div class="media">
+      <% url = @task.project.logo.exists? ? @task.project.logo.url(:thumb) : 'original/no-logo.png' %>
+      <%= image_tag url, size: "100x100", alt: "NO logo", class: "img-responsive pull-left media-object" %>
+      <div class="media-body">
+        <ol class="breadcrumb">
+          <li><%= link_to 'Dashboard', root_path %></li>
+          <li><%= link_to 'Projects', projects_path %></li>
+          <li><%= link_to @task.project.name, project_path(@task.project) %></li>
+          <li class="active"><%= @task.name %></li>
+          <%= render partial: 'shared/task_buttons', locals: { task: @task } %>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-6">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <h4 class="list-group-item-heading">Stastus</h4>
+          <div class="media">
+            <div class="media-body">
+              <p><%= @task.status  %></p>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <h4 class="list-group-item-heading">Short description</h4>
+          <div class="media">
+            <div class="media-body">
+              <p><%= @task.description  %></p>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <h4 class="list-group-item-heading">Full description</h4>
+          <div class="media">
+            <div class="media-body">
+              <p><%= simple_format(@task.full_description) %></p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <div class="list-group">
+        <div class="list-group-item">
+          <h4 class="list-group-item-heading">Assignee</h4>
+          <% if @task.user %>
+            <p class="list-group-item-text"><%= link_to @task.user.naming, user_path(@task.user) %></p>
+            <% elsif @task.dismissed %>
+              <% dismissed_by = User.find(@task.action_logs.where(action: 'stopped_progress').last.user_id)%>
+              <p class="list-group-item-text">Dismissed by <%= link_to dismissed_by.naming, user_path(dismissed_by) %></p>
+          <% end %>
+        </div>
+      </div>
+      <div class="list-group">
+        <div class="list-group-item">
+          <h4 class="list-group-item-heading">Dates</h4>
+          <div class="list-group-item-text">
+            <dl class="dl-horizontal">
+              <dt>Created at: </dt>
+              <dd><%= @task.created_at.strftime('%d/%m/%Y at %I:%M%p') %></dd>
+              <dt>Updated at: </dt>
+              <dd><%= @task.updated_at.strftime('%d/%m/%Y at %I:%M%p') %></dd>
+              <dt class="text-danger">Time left: </dt>
+              <dd>
+                <%= @task.time_left.strftime('%H:%M')%>
+                </dd>
+              <dt>Time spent: </dt>
+              <dd><%= @task.real_time? ? @task.real_time.strftime('%H:%M') : '-' %></dd>
+              </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

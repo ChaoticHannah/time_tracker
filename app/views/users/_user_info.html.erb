@@ -1,0 +1,5 @@
+<div class="row"></div>
+<% user.attributes.except(* User::ATTRIBUTES_TO_SCRUB).each_pair do |name, value| %>
+  <dt><%= name.humanize %></dt>
+  <dd><%= name == 'email' ? mail_to(value) : value %><%='$' if name == 'salary_per_hour' %></dd>
+<% end %>

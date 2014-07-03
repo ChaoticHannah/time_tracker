@@ -1,0 +1,20 @@
+<div class='row'></div>
+<div class="btn-group">
+  <%= link_to_if(task.just_created, 'Edit', edit_task_path(task), class: 'btn btn-danger'){link_to 'Edit', "#", class: 'btn btn-danger', disabled: true} %>
+  <% if task.just_created && current_user == task.user %>
+    <%= link_to 'Start task', change_status_path(task, status: 'start'), class: 'btn btn-danger', method: :patch %>
+    <%= link_to_if(task.has_no_user, 'Assign user', '#', class: 'btn btn-danger'){ link_to 'Reassign user', '#', class: 'btn btn-danger'} %>
+    <%= link_to 'Cancel', change_status_path(task, status: 'dismiss'), class: 'btn btn-danger', method: :patch %>
+  <% elsif task.in_progress && current_user == task.user %>
+    <%= link_to 'Finish task', change_status_path(task, status: 'finish'), class: 'btn btn-danger', method: :patch %>
+    <%= link_to 'Pause task', change_status_path(task, status: 'pause'), class: 'btn btn-danger', method: :patch %>
+    <%= link_to 'Cancel', change_status_path(task, status: 'dismiss'), class: 'btn btn-danger', method: :patch %>
+    <%= link_to_if(task.has_no_user, 'Assign user', '#', class: 'btn btn-danger'){ link_to 'Reassign user', '#', class: 'btn btn-danger'} %>
+  <% elsif task.dismissed && (current_user.manager? || current_user.admin?) %>
+    <%= link_to 'Activate', change_status_path(task, status: 'activate'), class: 'btn btn-danger', method: :patch %>
+  <% elsif task.done %>
+    <%= button_to 'Resolved', '#', disabled: true, class: 'btn btn-danger' %>
+  <% elsif task.paused && current_user == task.user %>
+    <%= link_to 'Continue', change_status_path(task, status: 'continue'), class: 'btn btn-danger', method: :patch %>
+  <% end %>
+</div>
