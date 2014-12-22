@@ -1,3 +1,2 @@
-class Admin::ActionLogsController < ApplicationController
-  before_filter :authenticate_admin!
+class ActionLogsController < ApplicationController
 end
